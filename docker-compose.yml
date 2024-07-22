@@ -4,7 +4,7 @@ services:
   db:
     deploy:
       # To use an external database, set replicas to 0 and set DATABASE_URL to the external database url in the .env file
-      replicas: 1
+      replicas: 0
     image: postgres:16
     shm_size: 1g
     restart: unless-stopped
@@ -15,8 +15,8 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: changeme
-      POSTGRES_DB: windmill
+      POSTGRES_PASSWORD: {$POSTGRES_PASSWORD}
+      POSTGRES_DB: {$POSTGRES_DB}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -27,7 +27,7 @@ services:
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
-      replicas: 1
+      replicas: 0
     restart: unless-stopped
     expose:
       - 8000
@@ -44,7 +44,7 @@ services:
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
-      replicas: 3
+      replicas: 0
       resources:
         limits:
           cpus: "1"
@@ -70,7 +70,7 @@ services:
     image: ${WM_IMAGE}
     pull_policy: always
     deploy:
-      replicas: 2
+      replicas: 0
       resources:
         limits:
           cpus: "0.1"
