@@ -13,9 +13,10 @@ services:
     volumes:
       - worker_logs:/tmp/windmill/logs
     labels:
-      - "traefik.enable=true"
+      - traefik.enable=true
       - "traefik.http.routers.windmill.rule=Host(`${BASE_URL}`) && PathPrefix(`/`)"
-      - "traefik.http.services.windmill.loadbalancer.server.port=8000"
+      - traefik.http.routers.windmill.entryPoints=http
+      - traefik.http.services.windmill.loadbalancer.server.port=8000
 
   windmill_worker:
     image: ${WM_IMAGE}
@@ -71,9 +72,10 @@ services:
     volumes:
       - windmill_index:/tmp/windmill/search
     labels:
-      - "traefik.enable=true"
+      - traefik.enable=true
       - "traefik.http.routers.indexer.rule=Host(`${BASE_URL}`) && PathPrefix(`/api/srch`)"
-      - "traefik.http.services.indexer.loadbalancer.server.port=8001"
+      - traefik.http.routers.indexer.entryPoints=http
+      - traefik.http.services.indexer.loadbalancer.server.port=8001
 
   lsp:
     image: ghcr.io/windmill-labs/windmill-lsp:latest
@@ -84,9 +86,10 @@ services:
     volumes:
       - lsp_cache:/root/.cache
     labels:
-      - "traefik.enable=true"
+      - traefik.enable=true
       - "traefik.http.routers.lsp.rule=Host(`${BASE_URL}`) && PathPrefix(`/ws`)"
-      - "traefik.http.services.lsp.loadbalancer.server.port=3001"
+      - traefik.http.routers.lsp.entryPoints=http
+      - traefik.http.services.lsp.loadbalancer.server.port=3001
 
   multiplayer:
     image: ghcr.io/windmill-labs/windmill-multiplayer:latest
@@ -96,9 +99,10 @@ services:
     expose:
       - 3002
     labels:
-      - "traefik.enable=true"
+      - traefik.enable=true
       - "traefik.http.routers.multiplayer.rule=Host(`${BASE_URL}`) && PathPrefix(`/ws_mp`)"
-      - "traefik.http.services.multiplayer.loadbalancer.server.port=3002"
+      - traefik.http.routers.multiplayer.entryPoints=http
+      - traefik.http.services.multiplayer.loadbalancer.server.port=3002
 
 volumes:
   worker_dependency_cache: null
