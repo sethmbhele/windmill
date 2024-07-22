@@ -32,9 +32,9 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - MODE=server
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     volumes:
       - worker_logs:/tmp/windmill/logs
 
@@ -52,9 +52,9 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - MODE=worker
       - WORKER_GROUP=default
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
     volumes:
       # mount the docker socket to allow to run docker containers from within the workers
@@ -78,9 +78,9 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - MODE=worker
       - WORKER_GROUP=native
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     volumes:
       - worker_logs:/tmp/windmill/logs
   ## This worker is specialized for reports or scraping jobs. It is assigned the "reports" worker group which has an init script that installs chromium and can be targeted by using the "chromium" worker tag.
@@ -126,9 +126,9 @@ services:
       - TANTIVY_DOC_COMMIT_MAX_BATCH_SIZE=100000
       #log memory usage and progress every so many documents indexed
       - TANTIVY_SHOW_MEMORY_EVERY=10000
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     volumes:
       - windmill_index:/tmp/windmill/search
 
