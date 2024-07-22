@@ -167,7 +167,7 @@ services:
       # - BASE_URL=mydomain.com # Uncomment and comment line above to enable HTTPS handling by Caddy
 
 volumes:
-  db_data: null
+  # db_data: null
   worker_dependency_cache: null
   worker_logs: null
   windmill_index: null
